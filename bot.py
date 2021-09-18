@@ -36,14 +36,14 @@ Here is your  [Short Link]({short_link})''', quote=True)
         await message.reply(f'Error: {e}', quote=True)
 
 
-async def get_shortlink(link):
-    url = 'http://pdiskshortner.net/api'
-    params = {'api': API_KEY, 'url': link}
-
+async def post_shortlink(Link):
+    url = 'http://linkapi.net/open/create_item'
+    params = {'api_key': API_KEY, 'content_src': Link, 'link_type': 'link'}
     async with aiohttp.ClientSession() as session:
         async with session.get(url, params=params, raise_for_status=True) as response:
             data = await response.json()
-            return data["shortenedUrl"]
+            print(data["data"].get("item_id"))
+            return data["data"].get("item_id")
 
 
 bot.run()
